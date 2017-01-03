@@ -13,6 +13,9 @@
 
 'use strict';
 
+// There should be a better way to do this...
+process.env.TZ = 'America/Los_Angeles';
+
 process.env.DEBUG = 'actions-on-google:*';
 let Assistant = require('actions-on-google').ApiAiAssistant;
 let express = require('express');
@@ -30,7 +33,13 @@ app.post('/', function (req, res) {
   // Fulfill action business logic
   function responseHandler (assistant) {
     // Complete your fulfillment logic and send a response
-    assistant.tell('Hello, World!');
+    if (assistant.getIntent() != "play_quietly") {
+      assistant.tell('Sorry, there was a problem.');
+      return;
+    }
+    var date = new Date();
+    var current_hour = date.getHours();
+    assistant.tell('The current hour is ' + current_hour);
   }
 
   assistant.handleRequest(responseHandler);
