@@ -39,7 +39,14 @@ app.post('/', function (req, res) {
     }
     var date = new Date();
     var current_hour = date.getHours();
-    assistant.tell('The current hour is ' + current_hour);
+    assistant.tell('It\'s ' + date.toString('hh tt'));
+    if (current_hour < 6 || current_hour > 8) {
+      assistant.tell('It is the middle of the night. Go back to sleep.')
+    } else if (current_hour < 7) {
+      assistant.tell('Yes, you can play quietly.')
+    } else {
+      assistant.tell('Actually it is wake-up time.')
+    }
   }
 
   assistant.handleRequest(responseHandler);
