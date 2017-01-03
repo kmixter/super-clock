@@ -37,16 +37,25 @@ app.post('/', function (req, res) {
       assistant.tell('Sorry, there was a problem.');
       return;
     }
-    var date = new Date();
-    var current_hour = date.getHours();
-    assistant.tell('It\'s ' + date.toString('hh tt'));
-    if (current_hour < 6 || current_hour > 8) {
-      assistant.tell('It is the middle of the night. Go back to sleep.')
-    } else if (current_hour < 7) {
-      assistant.tell('Yes, you can play quietly.')
+    let date = new Date();
+    let current_hour = date.getHours();
+    let dateString;
+    if (current_hour == 0) {
+      dateString = 'midnight'
+    } else if (current_hour <= 12) {
+      dateString = current_hour + 'am';
     } else {
-      assistant.tell('Actually it is wake-up time.')
+      dateString = (current_hour - 12) + 'pm';
     }
+    let response = 'It\'s ' + dateString + '. ';
+    if (current_hour < 6 || current_hour > 8) {
+      response += 'It is the middle of the night. Go back to sleep.';
+    } else if (current_hour < 7) {
+      response += 'Yes, you can play quietly.';
+    } else {
+      response += 'Actually it is wake-up time now.';
+    }
+    assistant.tell(response);
   }
 
   assistant.handleRequest(responseHandler);
