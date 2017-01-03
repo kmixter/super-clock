@@ -33,9 +33,9 @@ app.post('/', function (req, res) {
   // Fulfill action business logic
   function responseHandler (assistant) {
     // Complete your fulfillment logic and send a response
+    let response = '';
     if (assistant.getIntent() != "play_quietly") {
-      assistant.tell('Sorry, there was a problem.');
-      return;
+      response = 'Are you wondering if it is time to play quietly? ';
     }
     let date = new Date();
     let current_hour = date.getHours();
@@ -47,7 +47,7 @@ app.post('/', function (req, res) {
     } else {
       dateString = (current_hour - 12) + 'pm';
     }
-    let response = 'It\'s ' + dateString + '. ';
+    response += 'It\'s ' + dateString + '. ';
     if (current_hour < 6 || current_hour > 8) {
       response += 'It is the middle of the night. Go back to sleep.';
     } else if (current_hour < 7) {
