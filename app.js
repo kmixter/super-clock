@@ -48,7 +48,7 @@ app.post('/', function (req, res) {
       dateString = (current_hour - 12) + 'pm';
     }
     response += 'It\'s ' + dateString + '. ';
-    if (current_hour < 6 || current_hour > 8) {
+    if (current_hour < 6 || current_hour > 20) {
       response += 'It is the middle of the night. Go back to sleep.';
     } else if (current_hour < 7) {
       response += 'Yes, you can play quietly.';
